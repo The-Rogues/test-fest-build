@@ -11,8 +11,13 @@ var map_button_scn: PackedScene = preload("res://map_module/map_scenes/MapButton
 
 # Textures to be used by MapButtons.
 var texture_player: CompressedTexture2D = preload("res://map_module/map_assets/player.png")
-var texture_available: CompressedTexture2D = preload("res://map_module/map_assets/available.png")
-var texture_regular: CompressedTexture2D = preload("res://map_module/map_assets/regular.png")
+var texture_available_shop: CompressedTexture2D = preload("res://map_module/map_assets/availableshop.png")
+var texture_available_shop_hover: CompressedTexture2D = preload("res://map_module/map_assets/availableshophover.png")
+var texture_available_battle: CompressedTexture2D = preload("res://map_module/map_assets/availablebattle.png")
+var texture_available_battle_hover: CompressedTexture2D = preload("res://map_module/map_assets/availablebattlehover.png")
+var texture_battle: CompressedTexture2D = preload("res://map_module/map_assets/battle.png")
+var texture_shop: CompressedTexture2D = preload("res://map_module/map_assets/shop.png")
+var texture_passed: CompressedTexture2D = preload("res://map_module/map_assets/passed.png")
 
 var map_buttons: Array[TextureButton] # Array to keep track of buttons that belong to the map instance.
 var map_structure: RefCounted # Map structure is received in the init function, so the script does not need to be preloaded.
@@ -104,6 +109,10 @@ func anchor_button(in_button: TextureButton) -> void:
 # Return: void.
 func set_button_states() -> void:
 	
+	# When found, this is set to whichever layer the player is on.
+	# Before the player is found, the negative value tells that nodes are unavailable.
+	var player_layer: int = -1
+	
 	# When the player's node is reached, the pressable buttons will be stored in this array.
 	var accessable_buttons: Array[RefCounted] = []
 	for i in range(0, map_buttons.size()):
@@ -113,20 +122,43 @@ func set_button_states() -> void:
 		
 		# At player's position, set a unique texture and record accessable buttons.
 		if map_buttons[i].corr_node == map_structure.player_pos:
+			player_layer = map_structure.node_arr[i].node_layer
 			accessable_buttons = map_structure.node_arr[i].node_edges.duplicate(true)
 			map_buttons[i].texture_normal = texture_player
 			map_buttons[i].texture_hover = texture_player
+		
+		# If the player's node has been found, this branch is executed.
+		elif player_layer >= 0:
 			
-		# Check if a button is accessable. If it is, make it pressable.
-		elif check_accessable(map_buttons[i].corr_node, accessable_buttons):
-			map_buttons[i].disabled = false
-			map_buttons[i].texture_normal = texture_regular
-			map_buttons[i].texture_hover = texture_available
-			
-		# All other buttons are normal.
+			# This top branch executes if the loop is still on the same layer as the player.
+			if map_structure.node_arr[i].node_layer == player_layer:
+				map_buttons[i].texture_normal = texture_passed
+				map_buttons[i].texture_hover = texture_passed
+			else:
+				
+				# Check if a button is accessable. If it is, make it pressable.
+				if check_accessable(map_buttons[i].corr_node, accessable_buttons):
+					map_buttons[i].disabled = false
+					if map_structure.node_arr[i].node_data:
+						map_buttons[i].texture_normal = texture_available_battle
+						map_buttons[i].texture_hover = texture_available_battle_hover
+					else:
+						map_buttons[i].texture_normal = texture_available_shop
+						map_buttons[i].texture_hover = texture_available_shop_hover
+				
+				# All other buttons are normal.
+				else:
+					if map_structure.node_arr[i].node_data:
+						map_buttons[i].texture_normal = texture_battle
+						map_buttons[i].texture_hover = texture_shop
+					else:
+						map_buttons[i].texture_normal = texture_shop
+						map_buttons[i].texture_hover = texture_shop
 		else:
-			map_buttons[i].texture_normal = texture_regular
-			map_buttons[i].texture_hover = texture_regular
+			
+			# Set textures for passed nodes.
+			map_buttons[i].texture_normal = texture_passed
+			map_buttons[i].texture_hover = texture_passed
 
 # --_draw Function--
 # Description: Draws lines between related nodes. We will probably want to write a new function
