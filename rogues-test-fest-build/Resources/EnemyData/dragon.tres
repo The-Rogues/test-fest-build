@@ -1,0 +1,97 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=24 format=3 uid="uid://q4rg8kc34k4h"]
+
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="1_t5wgu"]
+[ext_resource type="Script" uid="uid://p6vjyooq37im" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/entity_behaviour.gd" id="2_otw35"]
+[ext_resource type="Script" uid="uid://b03rw7qqd1e6a" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/on_death_launchbody.gd" id="3_7iles"]
+[ext_resource type="Texture2D" uid="uid://dkhnxu3dpi2r1" path="res://Graphics/EntitySprites/MonsterSprites/monster_varient_5.tres" id="4_otw35"]
+[ext_resource type="Script" uid="uid://btp3527x14hav" path="res://Scripts/ResourceScripts/AtomicActionsData/action_group.gd" id="5_dge5j"]
+[ext_resource type="Script" uid="uid://vfjxpv4ct6c6" path="res://Scripts/ResourceScripts/AtomicActionsData/atomic_action.gd" id="6_35f0k"]
+[ext_resource type="Script" uid="uid://cqgo8f3dtv77n" path="res://Scripts/ResourceScripts/AtomicActionsData/damage_action.gd" id="7_m6lp6"]
+[ext_resource type="Script" uid="uid://dsksuenkr6byd" path="res://Scripts/ResourceScripts/AtomicActionsData/debuff_action.gd" id="8_48dxd"]
+[ext_resource type="Script" uid="uid://dha63lye0dnph" path="res://Scripts/ResourceScripts/AtomicActionsData/repeated_action.gd" id="9_2kpr5"]
+[ext_resource type="Script" uid="uid://byyoglfwhjibs" path="res://Scripts/ResourceScripts/AtomicActionsData/move_action.gd" id="9_7iles"]
+[ext_resource type="Script" uid="uid://sxih45j4ip5w" path="res://Scripts/ResourceScripts/BattleEntityData/enemy_data.gd" id="10_mci0x"]
+
+[sub_resource type="Resource" id="Resource_otw35"]
+script = ExtResource("1_t5wgu")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_ihuxt"]
+script = ExtResource("3_7iles")
+direction = Vector2(0, -1)
+bounces = 0
+metadata/_custom_type_script = "uid://b03rw7qqd1e6a"
+
+[sub_resource type="Resource" id="Resource_7iles"]
+script = ExtResource("1_t5wgu")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_nam2s"]
+script = ExtResource("1_t5wgu")
+max_value = 150.0
+max_on_start = true
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_tbl2s"]
+script = ExtResource("7_m6lp6")
+damage = 9
+metadata/_custom_type_script = "uid://cqgo8f3dtv77n"
+
+[sub_resource type="Resource" id="Resource_4q0mh"]
+script = ExtResource("5_dge5j")
+targeting = 1
+actions = Array[ExtResource("6_35f0k")]([SubResource("Resource_tbl2s")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[sub_resource type="Resource" id="Resource_n5htn"]
+script = ExtResource("8_48dxd")
+weaken_stat = 1
+multiplier = 1
+metadata/_custom_type_script = "uid://dsksuenkr6byd"
+
+[sub_resource type="Resource" id="Resource_jqola"]
+script = ExtResource("9_7iles")
+steps = 2
+direction = 2
+metadata/_custom_type_script = "uid://byyoglfwhjibs"
+
+[sub_resource type="Resource" id="Resource_gmpie"]
+script = ExtResource("5_dge5j")
+targeting = 1
+actions = Array[ExtResource("6_35f0k")]([SubResource("Resource_n5htn"), SubResource("Resource_jqola")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[sub_resource type="Resource" id="Resource_410gq"]
+script = ExtResource("7_m6lp6")
+damage = 3
+metadata/_custom_type_script = "uid://cqgo8f3dtv77n"
+
+[sub_resource type="Resource" id="Resource_skqrk"]
+script = ExtResource("9_2kpr5")
+times = 6
+action = SubResource("Resource_410gq")
+metadata/_custom_type_script = "uid://dha63lye0dnph"
+
+[sub_resource type="Resource" id="Resource_d67yo"]
+script = ExtResource("5_dge5j")
+targeting = 1
+actions = Array[ExtResource("6_35f0k")]([SubResource("Resource_skqrk")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[resource]
+script = ExtResource("10_mci0x")
+reward_amount = 90
+move_set = Array[ExtResource("5_dge5j")]([SubResource("Resource_4q0mh"), SubResource("Resource_gmpie"), SubResource("Resource_d67yo")])
+display_texture = ExtResource("4_otw35")
+name = "Dragon"
+health = SubResource("Resource_nam2s")
+defense_amplifier = SubResource("Resource_7iles")
+attack_amplifier = SubResource("Resource_otw35")
+behaviours = Array[ExtResource("2_otw35")]([SubResource("Resource_ihuxt")])
+metadata/_custom_type_script = "uid://sxih45j4ip5w"

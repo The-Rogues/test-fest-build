@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BattleObjectData" load_steps=5 format=3 uid="uid://cpid8rkvwcxvt"]
+
+[ext_resource type="Texture2D" uid="uid://qxctaf7cvfrl" path="res://Graphics/EntitySprites/BattleFieldObjects/object_varient_3.tres" id="1_t7015"]
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="2_jxmos"]
+[ext_resource type="Script" uid="uid://o5nbdchxwujp" path="res://Scripts/ResourceScripts/BattleEntityData/battle_object_data.gd" id="3_0f5cm"]
+
+[sub_resource type="Resource" id="Resource_qhpy1"]
+script = ExtResource("2_jxmos")
+max_value = 20.0
+max_on_start = true
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[resource]
+script = ExtResource("3_0f5cm")
+display_texture = ExtResource("1_t7015")
+name = "Stone Wall"
+health = SubResource("Resource_qhpy1")
+is_invincible = true
+block_player_attacks = true
+block_enemy_attacks = true
+metadata/_custom_type_script = "uid://o5nbdchxwujp"

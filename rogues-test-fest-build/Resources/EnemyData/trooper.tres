@@ -1,0 +1,89 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=22 format=3 uid="uid://bqnmfppsnxdh5"]
+
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="1_iyni3"]
+[ext_resource type="Script" uid="uid://p6vjyooq37im" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/entity_behaviour.gd" id="2_ps7yo"]
+[ext_resource type="Script" uid="uid://b03rw7qqd1e6a" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/on_death_launchbody.gd" id="3_5rij7"]
+[ext_resource type="Texture2D" uid="uid://gwqfbimby6mq" path="res://Graphics/EntitySprites/MonsterSprites/monster_varient_3.tres" id="4_yhi5q"]
+[ext_resource type="Script" uid="uid://btp3527x14hav" path="res://Scripts/ResourceScripts/AtomicActionsData/action_group.gd" id="5_ba8s1"]
+[ext_resource type="Script" uid="uid://vfjxpv4ct6c6" path="res://Scripts/ResourceScripts/AtomicActionsData/atomic_action.gd" id="6_cr6ej"]
+[ext_resource type="Script" uid="uid://cqgo8f3dtv77n" path="res://Scripts/ResourceScripts/AtomicActionsData/damage_action.gd" id="7_lu72m"]
+[ext_resource type="Script" uid="uid://dsksuenkr6byd" path="res://Scripts/ResourceScripts/AtomicActionsData/debuff_action.gd" id="8_g7xdp"]
+[ext_resource type="Script" uid="uid://dha63lye0dnph" path="res://Scripts/ResourceScripts/AtomicActionsData/repeated_action.gd" id="9_c78a6"]
+[ext_resource type="Script" uid="uid://sxih45j4ip5w" path="res://Scripts/ResourceScripts/BattleEntityData/enemy_data.gd" id="10_j0bxf"]
+
+[sub_resource type="Resource" id="Resource_iyni3"]
+script = ExtResource("1_iyni3")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_ihuxt"]
+script = ExtResource("3_5rij7")
+direction = Vector2(0, -1)
+bounces = 0
+metadata/_custom_type_script = "uid://b03rw7qqd1e6a"
+
+[sub_resource type="Resource" id="Resource_ps7yo"]
+script = ExtResource("1_iyni3")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_nam2s"]
+script = ExtResource("1_iyni3")
+max_value = 50.0
+max_on_start = true
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_tbl2s"]
+script = ExtResource("7_lu72m")
+damage = 6
+metadata/_custom_type_script = "uid://cqgo8f3dtv77n"
+
+[sub_resource type="Resource" id="Resource_4q0mh"]
+script = ExtResource("5_ba8s1")
+targeting = 1
+actions = Array[ExtResource("6_cr6ej")]([SubResource("Resource_tbl2s")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[sub_resource type="Resource" id="Resource_n5htn"]
+script = ExtResource("8_g7xdp")
+multiplier = 1
+metadata/_custom_type_script = "uid://dsksuenkr6byd"
+
+[sub_resource type="Resource" id="Resource_gmpie"]
+script = ExtResource("5_ba8s1")
+targeting = 1
+actions = Array[ExtResource("6_cr6ej")]([SubResource("Resource_n5htn")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[sub_resource type="Resource" id="Resource_410gq"]
+script = ExtResource("7_lu72m")
+damage = 3
+metadata/_custom_type_script = "uid://cqgo8f3dtv77n"
+
+[sub_resource type="Resource" id="Resource_skqrk"]
+script = ExtResource("9_c78a6")
+times = 3
+action = SubResource("Resource_410gq")
+metadata/_custom_type_script = "uid://dha63lye0dnph"
+
+[sub_resource type="Resource" id="Resource_d67yo"]
+script = ExtResource("5_ba8s1")
+targeting = 1
+actions = Array[ExtResource("6_cr6ej")]([SubResource("Resource_skqrk")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[resource]
+script = ExtResource("10_j0bxf")
+reward_amount = 35
+move_set = Array[ExtResource("5_ba8s1")]([SubResource("Resource_4q0mh"), SubResource("Resource_gmpie"), SubResource("Resource_d67yo")])
+display_texture = ExtResource("4_yhi5q")
+name = "Trooper"
+health = SubResource("Resource_nam2s")
+defense_amplifier = SubResource("Resource_ps7yo")
+attack_amplifier = SubResource("Resource_iyni3")
+behaviours = Array[ExtResource("2_ps7yo")]([SubResource("Resource_ihuxt")])
+metadata/_custom_type_script = "uid://sxih45j4ip5w"

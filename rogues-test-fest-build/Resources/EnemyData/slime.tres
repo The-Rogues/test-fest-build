@@ -1,0 +1,70 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=18 format=3 uid="uid://ctt40rvl2uset"]
+
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="1_edu7t"]
+[ext_resource type="Script" uid="uid://p6vjyooq37im" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/entity_behaviour.gd" id="2_42f4k"]
+[ext_resource type="Script" uid="uid://b03rw7qqd1e6a" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/on_death_launchbody.gd" id="3_6nhw1"]
+[ext_resource type="Texture2D" uid="uid://sxk7lvgkkh8p" path="res://Graphics/EntitySprites/MonsterSprites/monster_varient_0.tres" id="4_edu7t"]
+[ext_resource type="Script" uid="uid://btp3527x14hav" path="res://Scripts/ResourceScripts/AtomicActionsData/action_group.gd" id="5_gw8wt"]
+[ext_resource type="Script" uid="uid://vfjxpv4ct6c6" path="res://Scripts/ResourceScripts/AtomicActionsData/atomic_action.gd" id="6_fh0n2"]
+[ext_resource type="Script" uid="uid://cqgo8f3dtv77n" path="res://Scripts/ResourceScripts/AtomicActionsData/damage_action.gd" id="7_ih6ny"]
+[ext_resource type="Script" uid="uid://cetmmi5e7bh0x" path="res://Scripts/ResourceScripts/AtomicActionsData/heal_action.gd" id="8_42f4k"]
+[ext_resource type="Script" uid="uid://sxih45j4ip5w" path="res://Scripts/ResourceScripts/BattleEntityData/enemy_data.gd" id="9_eodpd"]
+
+[sub_resource type="Resource" id="Resource_edu7t"]
+script = ExtResource("1_edu7t")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_ihuxt"]
+script = ExtResource("3_6nhw1")
+direction = Vector2(0, -1)
+bounces = 1
+metadata/_custom_type_script = "uid://b03rw7qqd1e6a"
+
+[sub_resource type="Resource" id="Resource_42f4k"]
+script = ExtResource("1_edu7t")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_nam2s"]
+script = ExtResource("1_edu7t")
+max_value = 80.0
+max_on_start = true
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_tbl2s"]
+script = ExtResource("7_ih6ny")
+damage = 6
+metadata/_custom_type_script = "uid://cqgo8f3dtv77n"
+
+[sub_resource type="Resource" id="Resource_4q0mh"]
+script = ExtResource("5_gw8wt")
+targeting = 1
+actions = Array[ExtResource("6_fh0n2")]([SubResource("Resource_tbl2s")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[sub_resource type="Resource" id="Resource_6nhw1"]
+script = ExtResource("8_42f4k")
+heal_amount = 3
+metadata/_custom_type_script = "uid://cetmmi5e7bh0x"
+
+[sub_resource type="Resource" id="Resource_gmpie"]
+script = ExtResource("5_gw8wt")
+actions = Array[ExtResource("6_fh0n2")]([SubResource("Resource_6nhw1")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[resource]
+script = ExtResource("9_eodpd")
+reward_amount = 25
+move_set = Array[ExtResource("5_gw8wt")]([SubResource("Resource_4q0mh"), SubResource("Resource_gmpie")])
+display_texture = ExtResource("4_edu7t")
+name = "Slime"
+health = SubResource("Resource_nam2s")
+defense_amplifier = SubResource("Resource_42f4k")
+attack_amplifier = SubResource("Resource_edu7t")
+behaviours = Array[ExtResource("2_42f4k")]([SubResource("Resource_ihuxt")])
+metadata/_custom_type_script = "uid://sxih45j4ip5w"

@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=3 uid="uid://dys3hydaairuy"]
+
+[ext_resource type="Script" uid="uid://bctdk5muixu68" path="res://Scripts/BattleScene/BattleEntityScenes/battle_entity.gd" id="1_df4g5"]
+[ext_resource type="Resource" uid="uid://0k66g2l3qba2" path="res://Resources/DefaultResources/default_battle_entity_data.tres" id="2_hgc0k"]
+[ext_resource type="Texture2D" uid="uid://dtfw56mesa6nq" path="res://Graphics/PlaceholderSource/32rogues/animals.png" id="2_womkw"]
+[ext_resource type="FontFile" uid="uid://dv5gofkx77peh" path="res://Graphics/PlaceholderSource/Dungeon Mode Font/dungeon-mode.ttf" id="4_hgc0k"]
+[ext_resource type="AnimationLibrary" uid="uid://s6ntxl5p0nep" path="res://Resources/Animations/battle_entity_animations.res" id="4_og42k"]
+[ext_resource type="PackedScene" uid="uid://cyan3dv3gby66" path="res://Nodes/UI/health_bar.tscn" id="5_eriic"]
+[ext_resource type="Script" uid="uid://5csnu3315kur" path="res://Scripts/UI/display_name_label.gd" id="6_4b8ed"]
+
+[sub_resource type="Shader" id="Shader_q0abo"]
+code = "shader_type canvas_item;
+
+uniform vec4 flash_color : source_color;
+uniform float flash_value : hint_range(0.0, 1.0, 0.1);
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	COLOR = mix(texture_color, flash_color, flash_value);
+	COLOR.a = texture_color.a;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q0abo"]
+resource_local_to_scene = true
+shader = SubResource("Shader_q0abo")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_133a1"]
+atlas = ExtResource("2_womkw")
+region = Rect2(64, 288, 32, 32)
+
+[node name="Entity" type="Node2D" node_paths=PackedStringArray("entity_animator", "entity_sprite", "ui_display", "health_bar")]
+script = ExtResource("1_df4g5")
+entity_data = ExtResource("2_hgc0k")
+entity_animator = NodePath("EntityAnimator")
+entity_sprite = NodePath("Sprite2D")
+ui_display = NodePath("UI")
+health_bar = NodePath("UI/VBoxContainer/HealthBar")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_q0abo")
+position = Vector2(0, 32)
+scale = Vector2(2, 2)
+texture = SubResource("AtlasTexture_133a1")
+offset = Vector2(0, -16)
+
+[node name="EntityAnimator" type="AnimationPlayer" parent="."]
+libraries = {
+&"battle_entity": ExtResource("4_og42k")
+}
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -44.0
+offset_top = 20.0
+offset_right = 44.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(44, 0)
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Gap" type="MarginContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="NameLabel" type="Label" parent="UI/VBoxContainer" node_paths=PackedStringArray("battle_entity")]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("4_hgc0k")
+theme_override_font_sizes/font_size = 8
+text = "Unkown"
+horizontal_alignment = 1
+script = ExtResource("6_4b8ed")
+battle_entity = NodePath("../../..")
+
+[node name="HealthBar" parent="UI/VBoxContainer" instance=ExtResource("5_eriic")]
+layout_mode = 2
+
+[connection signal="animation_finished" from="EntityAnimator" to="EntityAnimator" method="_on_animation_finished"]

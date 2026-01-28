@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=18 format=3 uid="uid://cjpcb3oy2kqdi"]
+
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="1_l2xag"]
+[ext_resource type="Script" uid="uid://p6vjyooq37im" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/entity_behaviour.gd" id="2_ljirf"]
+[ext_resource type="Script" uid="uid://bwd8x1rblj4bp" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/on_death_pop.gd" id="3_l2xag"]
+[ext_resource type="Texture2D" uid="uid://boepg3dye1jmp" path="res://Graphics/EntitySprites/MonsterSprites/monster_varient_1.tres" id="4_ljirf"]
+[ext_resource type="Script" uid="uid://btp3527x14hav" path="res://Scripts/ResourceScripts/AtomicActionsData/action_group.gd" id="5_206sp"]
+[ext_resource type="Script" uid="uid://vfjxpv4ct6c6" path="res://Scripts/ResourceScripts/AtomicActionsData/atomic_action.gd" id="6_qq4yr"]
+[ext_resource type="Script" uid="uid://cqgo8f3dtv77n" path="res://Scripts/ResourceScripts/AtomicActionsData/damage_action.gd" id="7_6c64c"]
+[ext_resource type="Script" uid="uid://l765wa6kln4a" path="res://Scripts/ResourceScripts/AtomicActionsData/buff_action.gd" id="8_hk5qu"]
+[ext_resource type="Script" uid="uid://sxih45j4ip5w" path="res://Scripts/ResourceScripts/BattleEntityData/enemy_data.gd" id="9_exfv1"]
+
+[sub_resource type="Resource" id="Resource_l2xag"]
+script = ExtResource("1_l2xag")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_7512y"]
+script = ExtResource("3_l2xag")
+metadata/_custom_type_script = "uid://bwd8x1rblj4bp"
+
+[sub_resource type="Resource" id="Resource_ljirf"]
+script = ExtResource("1_l2xag")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_nam2s"]
+script = ExtResource("1_l2xag")
+max_value = 95.0
+max_on_start = true
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_tbl2s"]
+script = ExtResource("7_6c64c")
+damage = 6
+metadata/_custom_type_script = "uid://cqgo8f3dtv77n"
+
+[sub_resource type="Resource" id="Resource_4q0mh"]
+script = ExtResource("5_206sp")
+targeting = 1
+actions = Array[ExtResource("6_qq4yr")]([SubResource("Resource_tbl2s")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[sub_resource type="Resource" id="Resource_206sp"]
+script = ExtResource("8_hk5qu")
+amplify_stat = 1
+multiplier = 1
+metadata/_custom_type_script = "uid://l765wa6kln4a"
+
+[sub_resource type="Resource" id="Resource_gmpie"]
+script = ExtResource("5_206sp")
+actions = Array[ExtResource("6_qq4yr")]([SubResource("Resource_206sp")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[resource]
+script = ExtResource("9_exfv1")
+reward_amount = 35
+move_set = Array[ExtResource("5_206sp")]([SubResource("Resource_4q0mh"), SubResource("Resource_gmpie")])
+display_texture = ExtResource("4_ljirf")
+name = "Golem"
+health = SubResource("Resource_nam2s")
+defense_amplifier = SubResource("Resource_ljirf")
+attack_amplifier = SubResource("Resource_l2xag")
+behaviours = Array[ExtResource("2_ljirf")]([SubResource("Resource_7512y")])
+metadata/_custom_type_script = "uid://sxih45j4ip5w"

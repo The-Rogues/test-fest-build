@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="BattleFieldSchema" load_steps=4 format=3 uid="uid://wb2eoyrghfxg"]
+
+[ext_resource type="Script" uid="uid://o5nbdchxwujp" path="res://Scripts/ResourceScripts/BattleEntityData/battle_object_data.gd" id="1_xdka0"]
+[ext_resource type="Resource" uid="uid://0413e1iwchac" path="res://Resources/BattleObjectData/cobble_wall.tres" id="2_hhwn0"]
+[ext_resource type="Script" uid="uid://cjvnpxflphnr5" path="res://Scripts/ResourceScripts/BattleSceneResources/battle_field_schema.gd" id="2_r8w8a"]
+
+[resource]
+script = ExtResource("2_r8w8a")
+possible_objects = Array[ExtResource("1_xdka0")]([ExtResource("2_hhwn0"), ExtResource("2_hhwn0")])
+metadata/_custom_type_script = "uid://cjvnpxflphnr5"

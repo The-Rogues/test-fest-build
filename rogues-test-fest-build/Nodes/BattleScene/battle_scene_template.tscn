@@ -1,0 +1,111 @@
+[gd_scene load_steps=15 format=3 uid="uid://ixxhsopjxo2g"]
+
+[ext_resource type="Script" uid="uid://drlcp5cosbwjw" path="res://Scripts/BattleScene/battle_scene.gd" id="1_6mmpu"]
+[ext_resource type="PackedScene" uid="uid://1ipkbhxl3ark" path="res://Nodes/BattleScene/battle_field.tscn" id="2_dsjwx"]
+[ext_resource type="PackedScene" uid="uid://dubpebcoffte8" path="res://Nodes/BattleScene/play_area.tscn" id="3_kw3q3"]
+[ext_resource type="Script" uid="uid://b3qr8uamsao8a" path="res://Scripts/UI/player_hand.gd" id="4_ip6xv"]
+[ext_resource type="PackedScene" uid="uid://b6kxom317vkry" path="res://Nodes/UI/card_ui.tscn" id="5_b2con"]
+[ext_resource type="Resource" uid="uid://bg6c4g3c1qp6p" path="res://Resources/CardData/dbl_slash.tres" id="6_6mmpu"]
+[ext_resource type="Resource" uid="uid://sibxmmin7rgr" path="res://Resources/CardData/overexert.tres" id="7_dsjwx"]
+[ext_resource type="Resource" uid="uid://b2mj2k04lyi5h" path="res://Resources/CardData/retreat.tres" id="8_kw3q3"]
+[ext_resource type="Resource" uid="uid://bpl0tdumsdrc8" path="res://Resources/CardData/swing.tres" id="10_ip6xv"]
+[ext_resource type="Resource" uid="uid://cutd5qpikdh3i" path="res://Resources/CardData/spin_slash.tres" id="10_ts8fu"]
+[ext_resource type="FontFile" uid="uid://dv5gofkx77peh" path="res://Graphics/PlaceholderSource/Dungeon Mode Font/dungeon-mode.ttf" id="11_gthjr"]
+[ext_resource type="PackedScene" uid="uid://tvgskh3hgret" path="res://Nodes/UI/energy_counter.tscn" id="12_qx0x0"]
+[ext_resource type="PackedScene" uid="uid://c7lb2ji3nvodm" path="res://Nodes/UI/screen_cover.tscn" id="13_d73to"]
+[ext_resource type="PackedScene" uid="uid://dys3hydaairuy" path="res://Nodes/BattleScene/battle_entity_template.tscn" id="14_js8we"]
+
+[node name="BattleScreen" type="Node2D" node_paths=PackedStringArray("player_entity", "play_area", "battle_field", "energy_counter")]
+script = ExtResource("1_6mmpu")
+player_entity = NodePath("Player")
+play_area = NodePath("CardLayer/PlayArea")
+battle_field = NodePath("BattleField")
+energy_counter = NodePath("UILayer/EnergyCounter")
+
+[node name="BattleField" parent="." node_paths=PackedStringArray("player_entity") instance=ExtResource("2_dsjwx")]
+position = Vector2(553, 363)
+player_entity = NodePath("../Player")
+battle_object_offset = Vector2(0, -30)
+opportunity_chance = 0.5
+
+[node name="CardLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayArea" parent="CardLayer" instance=ExtResource("3_kw3q3")]
+position = Vector2(546, 263)
+
+[node name="PlayerHand" type="Node2D" parent="CardLayer" node_paths=PackedStringArray("drawn_cards")]
+script = ExtResource("4_ip6xv")
+drawn_cards = [NodePath("Card2"), NodePath("Card"), NodePath("Card3"), NodePath("Card5"), NodePath("Card4")]
+y_position = 480.0
+
+[node name="Card2" parent="CardLayer/PlayerHand" instance=ExtResource("5_b2con")]
+offset_left = 19.0
+offset_top = 254.0
+offset_right = 131.0
+offset_bottom = 404.0
+card_data = ExtResource("6_6mmpu")
+
+[node name="Card" parent="CardLayer/PlayerHand" instance=ExtResource("5_b2con")]
+offset_left = -44.0
+offset_top = 252.0
+offset_right = 68.0
+offset_bottom = 402.0
+card_data = ExtResource("7_dsjwx")
+
+[node name="Card3" parent="CardLayer/PlayerHand" instance=ExtResource("5_b2con")]
+offset_left = -104.0
+offset_top = 252.0
+offset_right = 8.0
+offset_bottom = 402.0
+card_data = ExtResource("8_kw3q3")
+
+[node name="Card5" parent="CardLayer/PlayerHand" instance=ExtResource("5_b2con")]
+offset_left = -104.0
+offset_top = 252.0
+offset_right = 8.0
+offset_bottom = 402.0
+card_data = ExtResource("10_ts8fu")
+
+[node name="Card4" parent="CardLayer/PlayerHand" instance=ExtResource("5_b2con")]
+offset_left = -172.0
+offset_top = 252.0
+offset_right = -60.0
+offset_bottom = 402.0
+card_data = ExtResource("10_ip6xv")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="EndTurnButton" type="Button" parent="UILayer"]
+offset_left = 820.0
+offset_top = 399.0
+offset_right = 942.0
+offset_bottom = 422.0
+theme_override_fonts/font = ExtResource("11_gthjr")
+text = "End Turn"
+
+[node name="EnergyCounter" parent="UILayer" instance=ExtResource("12_qx0x0")]
+offset_left = 232.0
+offset_top = 381.0
+offset_right = 272.0
+offset_bottom = 421.0
+energy_default = 5
+
+[node name="Button" type="Button" parent="UILayer"]
+texture_filter = 1
+offset_left = 492.0
+offset_top = 248.0
+offset_right = 599.0
+offset_bottom = 279.0
+theme_override_fonts/font = ExtResource("11_gthjr")
+theme_override_font_sizes/font_size = 8
+text = "Test damage"
+
+[node name="ScreenCover" parent="." instance=ExtResource("13_d73to")]
+visible = false
+
+[node name="Player" parent="." instance=ExtResource("14_js8we")]
+position = Vector2(550, 348)
+
+[connection signal="button_up" from="UILayer/EndTurnButton" to="." method="_on_end_turn_button_button_up"]
+[connection signal="button_up" from="UILayer/EndTurnButton" to="." method="_on_end_turn_button_up"]
+[connection signal="button_up" from="UILayer/Button" to="." method="_on_button_button_up"]

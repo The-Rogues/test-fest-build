@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://1ipkbhxl3ark"]
+
+[ext_resource type="Script" uid="uid://d3g4vyahucwgo" path="res://Scripts/BattleScene/BattleField/battle_field.gd" id="1_4ijax"]
+[ext_resource type="PackedScene" uid="uid://bgl7m0q246gct" path="res://Nodes/BattleScene/battle_position.tscn" id="2_ikxlt"]
+
+[node name="BattleField" type="Node2D"]
+script = ExtResource("1_4ijax")
+
+[node name="BattlePosition" parent="." instance=ExtResource("2_ikxlt")]
+position = Vector2(-223, 0)
+
+[node name="BattlePosition2" parent="." instance=ExtResource("2_ikxlt")]
+position = Vector2(-111, 0)
+
+[node name="BattlePosition3" parent="." instance=ExtResource("2_ikxlt")]
+position = Vector2(1, 0)
+
+[node name="BattlePosition4" parent="." instance=ExtResource("2_ikxlt")]
+position = Vector2(111, 0)
+
+[node name="BattlePosition5" parent="." instance=ExtResource("2_ikxlt")]
+position = Vector2(222, 0)

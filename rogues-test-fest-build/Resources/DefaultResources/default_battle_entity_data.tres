@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="BattleEntityData" load_steps=8 format=3 uid="uid://0k66g2l3qba2"]
+
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="1_u80r2"]
+[ext_resource type="Script" uid="uid://p6vjyooq37im" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/entity_behaviour.gd" id="2_w4nye"]
+[ext_resource type="Texture2D" uid="uid://b0jvfeo61xdxu" path="res://Graphics/EntitySprites/MonsterSprites/donkey.tres" id="3_rshoa"]
+[ext_resource type="Script" uid="uid://c35pmtk5w7lbt" path="res://Scripts/ResourceScripts/BattleEntityData/battle_entity_data.gd" id="4_rshoa"]
+
+[sub_resource type="Resource" id="Resource_ogqab"]
+script = ExtResource("1_u80r2")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_u80r2"]
+script = ExtResource("1_u80r2")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_ph17r"]
+script = ExtResource("1_u80r2")
+max_value = 50.0
+value = 50.0
+max_on_start = true
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[resource]
+script = ExtResource("4_rshoa")
+display_texture = ExtResource("3_rshoa")
+name = "Horse"
+health = SubResource("Resource_ph17r")
+defense_amplifier = SubResource("Resource_u80r2")
+attack_amplifier = SubResource("Resource_ogqab")
+metadata/_custom_type_script = "uid://c35pmtk5w7lbt"

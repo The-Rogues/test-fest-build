@@ -1,0 +1,103 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=26 format=3 uid="uid://cg30v23ohr5mc"]
+
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="1_0ql2f"]
+[ext_resource type="Script" uid="uid://p6vjyooq37im" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/entity_behaviour.gd" id="2_dmpfo"]
+[ext_resource type="Script" uid="uid://b03rw7qqd1e6a" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/on_death_launchbody.gd" id="3_kqcdo"]
+[ext_resource type="Texture2D" uid="uid://dte5dnc52hrbn" path="res://Graphics/EntitySprites/MonsterSprites/monster_varient_6.tres" id="4_kqcdo"]
+[ext_resource type="Script" uid="uid://btp3527x14hav" path="res://Scripts/ResourceScripts/AtomicActionsData/action_group.gd" id="5_p3h00"]
+[ext_resource type="Script" uid="uid://vfjxpv4ct6c6" path="res://Scripts/ResourceScripts/AtomicActionsData/atomic_action.gd" id="6_6ar1u"]
+[ext_resource type="Script" uid="uid://cqgo8f3dtv77n" path="res://Scripts/ResourceScripts/AtomicActionsData/damage_action.gd" id="7_fjgni"]
+[ext_resource type="Script" uid="uid://dsksuenkr6byd" path="res://Scripts/ResourceScripts/AtomicActionsData/debuff_action.gd" id="8_nxfe8"]
+[ext_resource type="Script" uid="uid://dha63lye0dnph" path="res://Scripts/ResourceScripts/AtomicActionsData/repeated_action.gd" id="9_vf6nr"]
+[ext_resource type="Script" uid="uid://sxih45j4ip5w" path="res://Scripts/ResourceScripts/BattleEntityData/enemy_data.gd" id="10_fdykh"]
+[ext_resource type="Script" uid="uid://cetmmi5e7bh0x" path="res://Scripts/ResourceScripts/AtomicActionsData/heal_action.gd" id="10_udm2n"]
+[ext_resource type="Script" uid="uid://l765wa6kln4a" path="res://Scripts/ResourceScripts/AtomicActionsData/buff_action.gd" id="11_p3h00"]
+
+[sub_resource type="Resource" id="Resource_kqcdo"]
+script = ExtResource("1_0ql2f")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_ihuxt"]
+script = ExtResource("3_kqcdo")
+direction = Vector2(0, -1)
+bounces = 0
+metadata/_custom_type_script = "uid://b03rw7qqd1e6a"
+
+[sub_resource type="Resource" id="Resource_udm2n"]
+script = ExtResource("1_0ql2f")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_nam2s"]
+script = ExtResource("1_0ql2f")
+max_value = 90.0
+max_on_start = true
+metadata/_custom_type_script = "uid://bve26sns3h03o"
+
+[sub_resource type="Resource" id="Resource_6ar1u"]
+script = ExtResource("7_fjgni")
+damage = 3
+metadata/_custom_type_script = "uid://cqgo8f3dtv77n"
+
+[sub_resource type="Resource" id="Resource_fjgni"]
+script = ExtResource("9_vf6nr")
+times = 3
+action = SubResource("Resource_6ar1u")
+metadata/_custom_type_script = "uid://dha63lye0dnph"
+
+[sub_resource type="Resource" id="Resource_nxfe8"]
+script = ExtResource("5_p3h00")
+targeting = 1
+actions = Array[ExtResource("6_6ar1u")]([SubResource("Resource_fjgni")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[sub_resource type="Resource" id="Resource_vf6nr"]
+script = ExtResource("8_nxfe8")
+weaken_stat = 1
+multiplier = 1
+metadata/_custom_type_script = "uid://dsksuenkr6byd"
+
+[sub_resource type="Resource" id="Resource_fdykh"]
+script = ExtResource("5_p3h00")
+targeting = 1
+actions = Array[ExtResource("6_6ar1u")]([SubResource("Resource_vf6nr")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[sub_resource type="Resource" id="Resource_d2ymy"]
+script = ExtResource("10_udm2n")
+heal_amount = 6
+metadata/_custom_type_script = "uid://cetmmi5e7bh0x"
+
+[sub_resource type="Resource" id="Resource_fm4d2"]
+script = ExtResource("5_p3h00")
+targeting = 3
+actions = Array[ExtResource("6_6ar1u")]([SubResource("Resource_d2ymy")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[sub_resource type="Resource" id="Resource_jc6fb"]
+script = ExtResource("11_p3h00")
+multiplier = 2
+metadata/_custom_type_script = "uid://l765wa6kln4a"
+
+[sub_resource type="Resource" id="Resource_63w7f"]
+script = ExtResource("5_p3h00")
+targeting = 2
+actions = Array[ExtResource("6_6ar1u")]([SubResource("Resource_jc6fb")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[resource]
+script = ExtResource("10_fdykh")
+reward_amount = 65
+move_set = Array[ExtResource("5_p3h00")]([SubResource("Resource_nxfe8"), SubResource("Resource_fdykh"), SubResource("Resource_fm4d2"), SubResource("Resource_63w7f")])
+display_texture = ExtResource("4_kqcdo")
+name = "Guard"
+health = SubResource("Resource_nam2s")
+defense_amplifier = SubResource("Resource_udm2n")
+attack_amplifier = SubResource("Resource_kqcdo")
+behaviours = Array[ExtResource("2_dmpfo")]([SubResource("Resource_ihuxt")])
+metadata/_custom_type_script = "uid://sxih45j4ip5w"
