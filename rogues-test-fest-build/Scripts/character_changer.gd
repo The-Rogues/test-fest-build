@@ -159,8 +159,11 @@ func _on_start_battle_button_up() -> void:
 	# Fletcher - Make a unique map for the game session. Add callback to load the battle scene when a node is clicked.
 	GlobalSessionManager.run_map = MapManager.new(randi())
 	GlobalSessionManager.run_map.add_callback(
-		func(_ignore: RefCounted): # Since the battle scene takes no input, node data can be ignored for now.
-			GlobalSceneLoader.load_battle_scene()
+		func(corr_node: RefCounted):
+			if corr_node.node_data:
+				GlobalSceneLoader.load_battle_scene()
+			else:
+				GlobalSceneLoader.load_scene("res://Map/shop_screen/ShopScreen.tscn")
 	)
 	
 	# Fletcher - Changed from load battle scene to load map scene.
