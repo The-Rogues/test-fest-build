@@ -12,8 +12,10 @@ func execute(battle_info:BattleActionInfo):
 	elif direction == DIRECTION.Right:
 		pass
 	elif direction == DIRECTION.Random:
-		if randf() <= 0.5:
-			dir = -dir
+		var rand = randf()
+		print(rand)
+		if rand < 0.5:
+			dir *= -1
 	
-	battle_info.battle_field.move_player(steps)
+	battle_info.battle_field.move_player(dir)
 	await battle_info.battle_field.moved_position

@@ -1,9 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dac2jtimfv2c0"]
+[gd_scene format=3 uid="uid://dac2jtimfv2c0"]
 
 [ext_resource type="Texture2D" uid="uid://ceemipxhdl63u" path="res://Graphics/EntitySprites/BattleFieldObjects/object_varient_2.tres" id="1_fwf06"]
 [ext_resource type="Script" uid="uid://dq0gcwe8cxfs2" path="res://Scripts/BattleScene/BattleEntityScenes/battle_field_object.gd" id="1_sr3yh"]
 [ext_resource type="Resource" uid="uid://b8sxupf2okfkh" path="res://Resources/DefaultResources/default_battle_field_object.tres" id="2_o78o2"]
-[ext_resource type="AnimationLibrary" uid="uid://bsbltwv4gjdbi" path="res://Resources/Animations/object_entity_animations.res" id="4_o78o2"]
+[ext_resource type="AnimationLibrary" path="res://Resources/Animations/object_entity_animations.res" id="4_o78o2"]
 [ext_resource type="PackedScene" uid="uid://cyan3dv3gby66" path="res://Nodes/UI/health_bar.tscn" id="5_jgdhq"]
 
 [sub_resource type="Shader" id="Shader_qs5c0"]
@@ -24,7 +24,7 @@ shader = SubResource("Shader_qs5c0")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_value = 0.0
 
-[node name="BattleObject" type="Node2D" node_paths=PackedStringArray("entity_animator", "entity_sprite", "ui_display", "health_bar")]
+[node name="BattleObject" type="Node2D" unique_id=1480715373 node_paths=PackedStringArray("entity_animator", "entity_sprite", "ui_display", "health_bar")]
 script = ExtResource("1_sr3yh")
 object_data = ExtResource("2_o78o2")
 entity_animator = NodePath("EntityAnimator")
@@ -32,7 +32,7 @@ entity_sprite = NodePath("Sprite2D")
 ui_display = NodePath("UI")
 health_bar = NodePath("UI/VBoxContainer/HealthBar")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1078302553]
 texture_filter = 1
 material = SubResource("ShaderMaterial_sr3yh")
 position = Vector2(0, 32)
@@ -40,12 +40,10 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_fwf06")
 offset = Vector2(0, -16)
 
-[node name="EntityAnimator" type="AnimationPlayer" parent="."]
-libraries = {
-&"battle_object": ExtResource("4_o78o2")
-}
+[node name="EntityAnimator" type="AnimationPlayer" parent="." unique_id=1771980315]
+libraries/battle_object = ExtResource("4_o78o2")
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=795100728]
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
@@ -60,7 +58,7 @@ grow_vertical = 0
 pivot_offset = Vector2(44, 0)
 size_flags_horizontal = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=248893853]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -71,10 +69,10 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HealthBar" parent="UI/VBoxContainer" instance=ExtResource("5_jgdhq")]
+[node name="HealthBar" parent="UI/VBoxContainer" unique_id=231057238 instance=ExtResource("5_jgdhq")]
 layout_mode = 2
 display_numbers = false
 
-[node name="Gap" type="MarginContainer" parent="UI/VBoxContainer"]
+[node name="Gap" type="MarginContainer" parent="UI/VBoxContainer" unique_id=1889195156]
 layout_mode = 2
 size_flags_horizontal = 4

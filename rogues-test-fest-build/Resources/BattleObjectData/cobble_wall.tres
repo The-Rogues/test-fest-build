@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BattleObjectData" load_steps=5 format=3 uid="uid://0413e1iwchac"]
+[gd_resource type="Resource" script_class="BattleObjectData" format=3 uid="uid://0413e1iwchac"]
 
 [ext_resource type="Texture2D" uid="uid://ceemipxhdl63u" path="res://Graphics/EntitySprites/BattleFieldObjects/object_varient_2.tres" id="1_ar381"]
 [ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="2_xcruh"]
