@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dys3hydaairuy"]
+[gd_scene format=3 uid="uid://dys3hydaairuy"]
 
 [ext_resource type="Script" uid="uid://bctdk5muixu68" path="res://Scripts/BattleScene/BattleEntityScenes/battle_entity.gd" id="1_df4g5"]
 [ext_resource type="Resource" uid="uid://0k66g2l3qba2" path="res://Resources/DefaultResources/default_battle_entity_data.tres" id="2_hgc0k"]
@@ -30,7 +30,7 @@ shader_parameter/flash_value = 0.0
 atlas = ExtResource("2_womkw")
 region = Rect2(64, 288, 32, 32)
 
-[node name="Entity" type="Node2D" node_paths=PackedStringArray("entity_animator", "entity_sprite", "ui_display", "health_bar")]
+[node name="Entity" type="Node2D" unique_id=293226690 node_paths=PackedStringArray("entity_animator", "entity_sprite", "ui_display", "health_bar")]
 script = ExtResource("1_df4g5")
 entity_data = ExtResource("2_hgc0k")
 entity_animator = NodePath("EntityAnimator")
@@ -38,7 +38,7 @@ entity_sprite = NodePath("Sprite2D")
 ui_display = NodePath("UI")
 health_bar = NodePath("UI/VBoxContainer/HealthBar")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1874866210]
 texture_filter = 1
 material = SubResource("ShaderMaterial_q0abo")
 position = Vector2(0, 32)
@@ -46,12 +46,10 @@ scale = Vector2(2, 2)
 texture = SubResource("AtlasTexture_133a1")
 offset = Vector2(0, -16)
 
-[node name="EntityAnimator" type="AnimationPlayer" parent="."]
-libraries = {
-&"battle_entity": ExtResource("4_og42k")
-}
+[node name="EntityAnimator" type="AnimationPlayer" parent="." unique_id=506054819]
+libraries/battle_entity = ExtResource("4_og42k")
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=1743550084]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -67,7 +65,7 @@ grow_vertical = 2
 pivot_offset = Vector2(44, 0)
 size_flags_horizontal = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI" unique_id=1951467649]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -78,11 +76,11 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Gap" type="MarginContainer" parent="UI/VBoxContainer"]
+[node name="Gap" type="MarginContainer" parent="UI/VBoxContainer" unique_id=1990285614]
 layout_mode = 2
 size_flags_horizontal = 4
 
-[node name="NameLabel" type="Label" parent="UI/VBoxContainer" node_paths=PackedStringArray("battle_entity")]
+[node name="NameLabel" type="Label" parent="UI/VBoxContainer" unique_id=2120167543 node_paths=PackedStringArray("battle_entity")]
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 4
@@ -93,7 +91,7 @@ horizontal_alignment = 1
 script = ExtResource("6_4b8ed")
 battle_entity = NodePath("../../..")
 
-[node name="HealthBar" parent="UI/VBoxContainer" instance=ExtResource("5_eriic")]
+[node name="HealthBar" parent="UI/VBoxContainer" unique_id=1271864552 instance=ExtResource("5_eriic")]
 layout_mode = 2
 
 [connection signal="animation_finished" from="EntityAnimator" to="EntityAnimator" method="_on_animation_finished"]

@@ -13,11 +13,18 @@ func execute(battle_info:BattleActionInfo):
 		var battle_object = battle_info.battle_field.get_object_infront_of_player()
 		if battle_object:
 			if user == battle_info.get_player():
+				# Player attacking
 				final_damage *= battle_object.object_data.attack_amplifier
 				
 				if battle_object.object_data.block_player_attacks:
 					battle_object.take_damage(final_damage)
 					return
+			elif user == null:
+				if entity == battle_info.get_player():
+					if battle_object.object_data.block_enemy_attacks:
+						battle_object.take_damage(final_damage)
+						return
+				pass
 			else:
 				if battle_object.object_data.block_enemy_attacks:
 					battle_object.take_damage(final_damage)

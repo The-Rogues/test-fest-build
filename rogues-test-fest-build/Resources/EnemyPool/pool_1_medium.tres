@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyPool" load_steps=11 format=3 uid="uid://c75ipmfwv0b68"]
+[gd_resource type="Resource" script_class="EnemyPool" format=3 uid="uid://c75ipmfwv0b68"]
 
 [ext_resource type="Script" uid="uid://b0cp6isywd85w" path="res://Scripts/ResourceScripts/BattleSceneResources/enemy_group.gd" id="1_flial"]
 [ext_resource type="Script" uid="uid://sxih45j4ip5w" path="res://Scripts/ResourceScripts/BattleEntityData/enemy_data.gd" id="2_ofyoc"]

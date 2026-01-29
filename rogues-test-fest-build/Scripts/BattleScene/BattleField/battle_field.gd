@@ -35,7 +35,7 @@ func initialize(battle_field_schema:BattleFieldSchema):
 			battle_position.add_child(new_object)
 			new_object.position += battle_object_offset
 			battle_object_positions.append(new_object)
-			
+			new_object.destroyed.connect(_on_object_destroyed)
 		else:
 			battle_object_positions.append(null)
 
@@ -79,6 +79,7 @@ func move_player(move_count:int):
 	
 	var new_position:int = current_player_position + move_count
 	
+	
 	if new_position < 0:
 		new_position = 0
 	elif new_position >= battle_positions.size():
@@ -101,7 +102,7 @@ func on_player_entered_opportunity(battle_position:BattlePosition):
 	
 	match battle_position.opportunity:
 		BattlePosition.Opportunity.DEFENSE:
-			player_entity.entity_data.defence_amplifier.increase(0.5)
+			player_entity.entity_data.defense_amplifier.increase(0.5)
 		BattlePosition.Opportunity.OFFENSE:
 			player_entity.entity_data.attack_amplifier.increase(0.5)
 	
@@ -113,14 +114,24 @@ func on_player_exited_opportunity(battle_position:BattlePosition):
 	
 	match battle_position.opportunity:
 		BattlePosition.Opportunity.DEFENSE:
-			player_entity.entity_data.defence_amplifier.reduce(0.5)
+			player_entity.entity_data.defense_amplifier.reduce(0.5)
 		BattlePosition.Opportunity.OFFENSE:
-			player_entity.entity_data.defence_amplifier.reduce(0.5)
+			player_entity.entity_data.attack_amplifier.reduce(0.5)
 	
 	player_on_opportunity = false 
 
+func _on_object_destroyed(object:BattleFieldObject):
+	var obj_index = battle_object_positions.find(object)
+	if obj_index != -1:
+		battle_object_positions[obj_index] = null
+	
+	object.queue_free()
+
 func get_player_distance_to_object(object_name:String):
 	for i in range(0, battle_object_positions.size()):
+		if !battle_object_positions[i]:
+			continue
+		
 		if battle_object_positions[i].object_data.name == object_name:
 			return i - current_player_position
 	# ERROR CODE

@@ -10,7 +10,7 @@ func get_battle_field_layout():
 	var layout:Array[BattleObjectData]
 	match layout_options:
 		Layout.RANDOM:
-			for i in range(0, 4):
+			for i in range(0, 5):
 				if randf() > 0.5:
 					layout.append(null)
 					pass

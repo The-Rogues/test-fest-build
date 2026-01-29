@@ -10,6 +10,7 @@ signal hovered(card:CardUI, is_hovering:bool)
 @onready var energy_label: Label = $CardUI/MarginContainer/VBoxContainer/EnergyLabel
 @onready var name_label: Label = $CardUI/MarginContainer/VBoxContainer/NameLabel
 @onready var description_label: Label = $CardUI/MarginContainer/VBoxContainer/VBoxContainer/DescriptionLabel
+
 @export var card_data:CardData
 @export var starting_scale:Vector2
 @export var hover_blow_up_amount:float = 0.05
@@ -30,6 +31,11 @@ func set_card_owner(card_hand:CardHand):
 	card_owner = card_hand
 
 func set_card_data(new_card_data:CardData):
+	if energy_label == null:
+		energy_label = $CardUI/MarginContainer/VBoxContainer/EnergyLabel
+		name_label = $CardUI/MarginContainer/VBoxContainer/NameLabel
+		description_label = $CardUI/MarginContainer/VBoxContainer/VBoxContainer/DescriptionLabel
+	
 	card_data = new_card_data
 	energy_label.text = str(card_data.energy_cost)
 	name_label.text = card_data.name

@@ -2,7 +2,7 @@ extends Node2D
 class_name BattleFieldObject
 
 # Represents players & enemies
-signal defeated(entity:BattleEntity)
+signal destroyed(entity:BattleFieldObject)
 signal healed
 signal damaged
 signal queue_action(action_group:ActionGroup)
@@ -79,7 +79,7 @@ func _on_defeated():
 		return
 	
 	is_defeated = true
-	defeated.emit(self)
+	destroyed.emit(self)
 	entity_animator.stop()
 	entity_animator.play("battle_object/defeat")
 	await entity_animator.animation_finished

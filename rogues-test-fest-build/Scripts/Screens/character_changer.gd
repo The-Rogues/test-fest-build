@@ -138,12 +138,9 @@ func _on_start_battle_button_up() -> void:
 	defensive_trait.weight = defensive_weight.value
 	strategic_trait.weight = strategic_weight.value
 	
-	var battle_entity_data:BattleEntityData = load("res://Resources/DefaultResources/default_battle_entity_data.tres")
+	var battle_entity_data:BattleEntityData = load("res://Resources/DefaultResources/default_player_entity_data.tres")
 	battle_entity_data.name = name_label.text
 	battle_entity_data.display_texture = character_sprite.texture
-	
-	print("Saving character data")
-	print("Hello ", battle_entity_data.name)
 	
 	var character_data = CharacterData.new(
 		backstory_label.text,

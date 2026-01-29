@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=26 format=3 uid="uid://cg30v23ohr5mc"]
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://cg30v23ohr5mc"]
 
 [ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="1_0ql2f"]
 [ext_resource type="Script" uid="uid://p6vjyooq37im" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/entity_behaviour.gd" id="2_dmpfo"]

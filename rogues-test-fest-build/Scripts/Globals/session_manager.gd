@@ -23,9 +23,6 @@ func initialize_run():
 
 	run_progress.character_data = template.character_data
 	run_progress.character_entity_data = template.character_entity_data
-	print(run_progress)
-	print(run_progress.character_data)
-	print(run_progress.character_entity_data)
 
 func create_battle_scene_configuration():
 	var enemy_group:EnemyGroup 

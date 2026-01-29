@@ -3,10 +3,13 @@ extends Node2D
 
 var CARD_WIDTH:float = 100
 var screen_center_x:float
+@export var cards:Array[CardData]
 @export var drawn_cards:Array[CardUI] = []
 @export var y_position:float
 var grabbed_card:CardUI = null
 var screen_size:Vector2
+
+const CARD_UI = preload("res://Nodes/UI/card_ui.tscn")
 
 func _ready() -> void:
 	screen_size = get_viewport().size
@@ -24,12 +27,24 @@ func _process(delta: float) -> void:
 func initialize_drawn_cards():
 	screen_center_x = get_viewport().size.x / 2
 	
+	for card_data in cards:
+		var new_card_ui:CardUI = CARD_UI.instantiate()
+		new_card_ui.set_card_data(card_data)
+		add_child(new_card_ui)
+		print(new_card_ui.get_parent().name)
+		
+		new_card_ui.hovered.connect(on_card_hovered)
+		new_card_ui.clicked.connect(on_card_grabbed)
+		new_card_ui.released.connect(on_card_released)
+		new_card_ui.set_card_owner(self)
+		drawn_cards.append(new_card_ui)
+	'''
 	for card in drawn_cards:
 		card.hovered.connect(on_card_hovered)
 		card.clicked.connect(on_card_grabbed)
 		card.released.connect(on_card_released)
 		card.set_card_owner(self)
-	
+	'''
 	update_drawn_cards_position()
 # Called when the node enters the scene tree for the first time.
 
@@ -48,12 +63,32 @@ func tween_card_to_position(card, new_positon):
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "position", new_positon, 0.2)
 
+func draw_card(card_data:CardData):
+	var new_card_ui = CARD_UI.instantiate()
+	new_card_ui.set_card_data(card_data)
+	add_child(new_card_ui)
+	new_card_ui.hovered.connect(on_card_hovered)
+	new_card_ui.clicked.connect(on_card_grabbed)
+	new_card_ui.released.connect(on_card_released)
+	new_card_ui.set_card_owner(self)
+	drawn_cards.append(new_card_ui)
+	update_drawn_cards_position()
+
+func clear_hand():
+	for card in drawn_cards:
+		card.queue_free()
+	cards.clear()
+	drawn_cards.clear()
+
 func add_card(card:CardUI):
 	if !drawn_cards.has(card):
+		cards.append(card.card_data)
 		drawn_cards.append(card)
 
 func remove_card(card:CardUI):
 	if drawn_cards.has(card):
+		if cards.has(card.card_data):
+			cards.erase(card.card_data)
 		drawn_cards.erase(card)
 
 func on_card_grabbed(card_ui:CardUI):

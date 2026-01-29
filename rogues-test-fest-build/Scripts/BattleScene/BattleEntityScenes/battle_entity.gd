@@ -20,6 +20,7 @@ signal turn_changed(battle_context:BattleActionInfo)
 @export var ui_display:Control
 @export var health_bar:HealthBar
 @export var debug_force_initialization:bool = false
+@export var skip_defeat_animation:bool = false
 
 var is_defeated:bool = false
 
@@ -62,7 +63,6 @@ func take_damage(amount:float):
 	entity_data.health.reduce(final_damage)
 	if entity_data.health.value == entity_data.health.min_value:
 		return
-	
 	entity_animator.stop()
 	entity_animator.play("battle_entity/damage")
 	damaged.emit()
@@ -118,6 +118,8 @@ func _on_defeated():
 	entity_animator.play("battle_entity/defeat")
 	await entity_animator.animation_finished
 	if entity_sprite:
+		if skip_defeat_animation:
+			return
 		entity_sprite.visible = false
 	if ui_display:
 		await get_tree().create_timer(2).timeout
@@ -139,6 +141,9 @@ func _on_arrived():
 func _on_turn_changed(battle_info:BattleActionInfo):
 	turn_changed.emit(battle_info)
 	pass
+
+func hide_ui():
+	ui_display.visible = false
 
 func kill():
 	entity_data.health.set_to_min()
