@@ -12,7 +12,7 @@ func initialize(new_health_stat:Stat):
 	difference_bar = $DifferenceBar
 	health_label = $CenterContainer/HealthLabel
 	health_stat = new_health_stat
-	max_value = health_stat.value
+	max_value = health_stat.max_value
 	value = health_stat.value
 	difference_bar.max_value = health_stat.max_value
 	difference_bar.value = health_stat.value

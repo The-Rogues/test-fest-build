@@ -1,3 +1,5 @@
+# Stores game information that can be saved and reloaded
+# Also accessed throughout the game to update player progess
 extends Resource
 class_name RunProgress
 
@@ -7,3 +9,5 @@ class_name RunProgress
 @export var floor_progress:int = 1
 @export var floor:int = 1
 @export var experience_log:Array[String]
+var run_map: MapManager
+var gold:int = 0

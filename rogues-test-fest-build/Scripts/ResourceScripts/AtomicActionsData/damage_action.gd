@@ -37,4 +37,6 @@ func execute(battle_info:BattleActionInfo):
 		# Waits for animation to finish before returning
 		# Function that calls execute is also waiting for this function to finish
 		# before running other functions
-		await battle_info.animation_bus.play_hit(entity)
+		if !entity.is_defeated:
+			await entity.entity_animator.animation_finished
+		#await battle_info.animation_bus.play_hit(entity)

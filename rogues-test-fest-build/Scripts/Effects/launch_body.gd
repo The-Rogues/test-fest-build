@@ -21,12 +21,14 @@ func spawn_and_launch(texture:Texture2D, direction:Vector2):
 	animation_player.play("launched_entity/spin")
 	timer.start()
 	timer.timeout.connect(on_timer_ended)
+	spawn_particles(global_position)
 
 func _physics_process(delta):
 	if !is_active:
 		return
 	
 	var collision = move_and_collide(velocity * delta)
+	
 	if collision:
 		bounces +=1
 		var bounce_direction = collision.get_normal()
@@ -54,3 +56,7 @@ func spawn_particles(position:Vector2):
 func on_timer_ended():
 	queue_free()
 	pass
+
+
+func _on_timer_timeout() -> void:
+	pass # Replace with function body.

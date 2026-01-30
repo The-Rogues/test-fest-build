@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CardData" format=3 uid="uid://dgt1ffuwrstbt"]
+
+[ext_resource type="Script" uid="uid://btp3527x14hav" path="res://Scripts/ResourceScripts/AtomicActionsData/action_group.gd" id="1_wajfn"]
+[ext_resource type="Script" uid="uid://vfjxpv4ct6c6" path="res://Scripts/ResourceScripts/AtomicActionsData/atomic_action.gd" id="2_hvpie"]
+[ext_resource type="Script" uid="uid://eoxthn8b82t6" path="res://Scripts/Cards/card_data.gd" id="2_oqapy"]
+[ext_resource type="Script" uid="uid://byyoglfwhjibs" path="res://Scripts/ResourceScripts/AtomicActionsData/move_action.gd" id="3_j7hfg"]
+
+[sub_resource type="Resource" id="Resource_f0ctq"]
+script = ExtResource("3_j7hfg")
+direction = 2
+metadata/_custom_type_script = "uid://byyoglfwhjibs"
+
+[sub_resource type="Resource" id="Resource_b70cn"]
+script = ExtResource("1_wajfn")
+targeting = 1
+actions = Array[ExtResource("2_hvpie")]([SubResource("Resource_f0ctq")])
+metadata/_custom_type_script = "uid://btp3527x14hav"
+
+[resource]
+script = ExtResource("2_oqapy")
+name = "Step"
+description = "Move to adjacent position"
+card_actions = Array[ExtResource("1_wajfn")]([SubResource("Resource_b70cn")])
+metadata/_custom_type_script = "uid://eoxthn8b82t6"

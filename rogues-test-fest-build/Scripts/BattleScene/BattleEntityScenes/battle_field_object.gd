@@ -6,7 +6,6 @@ signal destroyed(entity:BattleFieldObject)
 signal healed
 signal damaged
 signal queue_action(action_group:ActionGroup)
-#signal new_turn(battle_context:BattleActionInfo)
 
 @export var object_data:BattleObjectData
 @export var entity_animator:AnimationPlayer
@@ -14,6 +13,8 @@ signal queue_action(action_group:ActionGroup)
 @export var ui_display:Control
 @export var health_bar:HealthBar
 @export var debug_force_initialization:bool = false
+
+
 
 var is_defeated:bool = false
 
@@ -101,3 +102,12 @@ func update_health_bar():
 
 func destroy():
 	object_data.health.set_to_min()
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if object_data.damaged_by_launch_body:
+		if body is LaunchBody:
+			take_damage(6)
+	else:
+		entity_animator.play("battle_object/damage")
+	pass # Replace with function body.

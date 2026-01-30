@@ -1,10 +1,18 @@
+# Intended to be used as a global object for loading scenes & battles
 extends Node2D
 class_name SceneLoader
 
+# Signals for tracking load progress
+signal started_loading_scene
 signal load_progresses_updated(progress)
 signal scene_loaded
-signal started_loading_scene
 
+# Stores data on the next battle to be loaded
+var pending_battle_configuration:BattleSceneConfiguration
+
+# TODO: 
+const FLOOR_1_ENEMY_POOL = preload("res://Resources/FloorEnemyPools/floor_pool_1.tres")
+const FLOOR_1_SCHEMA = preload("res://Resources/DefaultResources/default_floor_object_schemas.tres")
 const BATTLE_SCENE_TEMPLATE_PATH = "res://Nodes/BattleScene/battle_scene_template.tscn"
 const CHARACTER_CHANGER_SCREEN = "res://Screens/character_screen.tscn"
 
@@ -46,7 +54,7 @@ func load_battle_scene():
 	if loading_scene:
 		return
 	
-	GlobalSessionManager.create_battle_scene_configuration()
+	create_battle_scene_configuration()
 	ResourceLoader.load_threaded_request(BATTLE_SCENE_TEMPLATE_PATH)
 	loading_scene_path = BATTLE_SCENE_TEMPLATE_PATH
 	loading_scene = true
@@ -59,6 +67,21 @@ func _on_started_loading_scene():
 	#sprite_2d.texture = GlobalSessionManager.run_progress.character_data.entity_data.display_texture
 	loading_screen_layer.visible = true
 	character_animator.play("battle_entity/march")
+
+func create_battle_scene_configuration():
+	var enemy_group:EnemyGroup 
+	#objects
+	if GlobalSessionManager.get_current_floor() == 1:
+		enemy_group = FLOOR_1_ENEMY_POOL.get_enemy_group(GlobalSessionManager.get_floor_progress())
+	# TODO: Add additional if statements for future floors 2, 3, 4
+	
+	var battle_config = BattleSceneConfiguration.new(
+			GlobalSessionManager.get_character_entity(),
+			enemy_group,
+			FLOOR_1_SCHEMA.floor_layout_group.pick_random()
+	)
+	pending_battle_configuration = battle_config
+	return battle_config
 
 func _on_scene_loaded():
 	await get_tree().create_timer(1).timeout

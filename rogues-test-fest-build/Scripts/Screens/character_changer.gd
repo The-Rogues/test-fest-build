@@ -154,8 +154,8 @@ func _on_start_battle_button_up() -> void:
 	start_battle.disabled = true
 	
 	# Fletcher - Make a unique map for the game session. Add callback to load the battle scene when a node is clicked.
-	GlobalSessionManager.run_map = MapManager.new(randi())
-	GlobalSessionManager.run_map.add_callback(
+	GlobalSessionManager.run_progress.run_map = MapManager.new(randi())
+	GlobalSessionManager.run_progress.run_map.add_callback(
 		func(corr_node: RefCounted):
 			if corr_node.node_data:
 				GlobalSceneLoader.load_battle_scene()

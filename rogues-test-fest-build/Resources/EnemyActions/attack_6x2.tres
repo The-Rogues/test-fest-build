@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="EnemyAction" format=3 uid="uid://kwx0k0ib7kw7"]
+
+[ext_resource type="Script" uid="uid://vfjxpv4ct6c6" path="res://Scripts/ResourceScripts/AtomicActionsData/atomic_action.gd" id="1_8q2ng"]
+[ext_resource type="Script" uid="uid://cqgo8f3dtv77n" path="res://Scripts/ResourceScripts/AtomicActionsData/damage_action.gd" id="2_gc3vl"]
+[ext_resource type="Script" uid="uid://dha63lye0dnph" path="res://Scripts/ResourceScripts/AtomicActionsData/repeated_action.gd" id="3_25l3r"]
+[ext_resource type="Texture2D" uid="uid://b4we0wrqesajm" path="res://Graphics/BattleIcons/attack_icon.tres" id="4_18lyw"]
+[ext_resource type="Script" uid="uid://pq8nnotusssk" path="res://Scripts/ResourceScripts/AtomicActionsData/enemy_action.gd" id="5_vasv7"]
+
+[sub_resource type="Resource" id="Resource_yspbr"]
+script = ExtResource("2_gc3vl")
+damage = 6
+metadata/_custom_type_script = "uid://cqgo8f3dtv77n"
+
+[sub_resource type="Resource" id="Resource_4ntyt"]
+script = ExtResource("3_25l3r")
+times = 2
+action = SubResource("Resource_yspbr")
+metadata/_custom_type_script = "uid://dha63lye0dnph"
+
+[resource]
+script = ExtResource("5_vasv7")
+description_text = "Attack player for 6 damage twice"
+icon = ExtResource("4_18lyw")
+targeting = 1
+actions = Array[ExtResource("1_8q2ng")]([SubResource("Resource_4ntyt")])
+metadata/_custom_type_script = "uid://pq8nnotusssk"

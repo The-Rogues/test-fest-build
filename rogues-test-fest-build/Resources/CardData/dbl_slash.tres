@@ -27,6 +27,6 @@ metadata/_custom_type_script = "uid://btp3527x14hav"
 script = ExtResource("5_a6qgq")
 name = "DBL Slash"
 description = "Deal 6 damage twice"
-energy_cost = 2
+energy_cost = 3
 card_actions = Array[ExtResource("1_0obv6")]([SubResource("Resource_tlnm3")])
 metadata/_custom_type_script = "uid://eoxthn8b82t6"

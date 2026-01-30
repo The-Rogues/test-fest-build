@@ -55,7 +55,7 @@ func on_new_turn_started():
 		
 		if opportunity.life_span == 0:
 			opportunities.erase(opportunity)
-	
+	print("new turn")
 	if randf() <= opportunity_chance and opportunities.size() < max_opportunities:
 		create_opportunity()
 	
@@ -127,12 +127,12 @@ func _on_object_destroyed(object:BattleFieldObject):
 	
 	object.queue_free()
 
-func get_player_distance_to_object(object_name:String):
+func get_player_distance_to_object(object_type:BattleObjectData.Type):
 	for i in range(0, battle_object_positions.size()):
 		if !battle_object_positions[i]:
 			continue
-		
-		if battle_object_positions[i].object_data.name == object_name:
+		if battle_object_positions[i].object_data.object_type == object_type:
+			print("found object")
 			return i - current_player_position
 	# ERROR CODE
 	return -9

@@ -2,8 +2,8 @@ extends Node2D
 class_name BattleEntity
 # Represents players & enemies
 signal defeated(entity:BattleEntity)
-signal healed
-signal damaged
+signal healed(amount:int)
+signal damaged(amount:int)
 signal buffed_defense
 signal debuffed_defense
 signal buffed_attack
@@ -21,6 +21,10 @@ signal turn_changed(battle_context:BattleActionInfo)
 @export var health_bar:HealthBar
 @export var debug_force_initialization:bool = false
 @export var skip_defeat_animation:bool = false
+@onready var bounce_collision: CollisionShape2D = $BounceBox/CollisionShape2D
+@onready var hurtbox_collision: CollisionShape2D = $Hurtbox/CollisionShape2D
+@onready var icon: TextureRect = $UI/Icon
+@onready var context_panel: ContextPanel = $UI/ContextPanel
 
 var is_defeated:bool = false
 
@@ -35,6 +39,7 @@ func initialize(new_entity_data:BattleEntityData = null):
 	entity_data = entity_data.duplicate(true)
 	
 	entity_data.health.initialize()
+	
 	entity_data.defense_amplifier.initialize()
 	entity_data.attack_amplifier.initialize()
 	
@@ -65,7 +70,7 @@ func take_damage(amount:float):
 		return
 	entity_animator.stop()
 	entity_animator.play("battle_entity/damage")
-	damaged.emit()
+	damaged.emit(amount)
 	await entity_animator.animation_finished
 	entity_animator.play("battle_entity/idle")
 
@@ -76,7 +81,7 @@ func heal(amount:float):
 	entity_data.health.increase(amount)
 	entity_animator.stop()
 	entity_animator.play("battle_entity/heal")
-	healed.emit()
+	healed.emit(amount)
 	await entity_animator.animation_finished
 	entity_animator.play("battle_entity/idle")
 
@@ -111,9 +116,11 @@ func debuff_attack(amount:float):
 func _on_defeated():
 	if is_defeated:
 		return
-	
+	bounce_collision.disabled = true
+	hurtbox_collision.disabled = true
 	is_defeated = true
 	defeated.emit(self)
+	
 	entity_animator.stop()
 	entity_animator.play("battle_entity/defeat")
 	await entity_animator.animation_finished
@@ -147,3 +154,34 @@ func hide_ui():
 
 func kill():
 	entity_data.health.set_to_min()
+
+
+func _on_hurtbox_body_entered(body: Node2D) -> void:
+	if is_defeated:
+		return
+	
+	if body is LaunchBody:
+		take_damage(6)
+	pass # Replace with function body.
+
+func update_icon(texture:Texture2D):
+	icon.texture = texture
+
+func display_icon():
+	icon.visible = true
+
+func hide_icon():
+	icon.visible = false
+
+func _on_icon_mouse_entered() -> void:
+	if !icon.visible:
+		return
+	context_panel.visible = true
+	pass # Replace with function body.
+
+
+func _on_icon_mouse_exited() -> void:
+	if !icon.visible:
+		return
+	context_panel.visible = false
+	pass # Replace with function body.

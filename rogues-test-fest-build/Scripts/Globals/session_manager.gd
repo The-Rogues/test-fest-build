@@ -1,21 +1,22 @@
+# Intended to be used as a global object for managing
+# the storage & loading of persistent data using a RunProgress resource
+# Used to store player character info and game progress
+
+# Author: Fabian
+# Editors: Fletcher
+
 extends Node2D
 class_name SessionManager
 
-#const DEFAULT_CHARACTER_DATA = preload("res://Resources/DefaultResources/default_character_data.tres")
-#const DEFAULT_RUN_PROGRESS = preload("res://Resources/DefaultResources/default_run_progress.tres")
 const DEFAULT_RUN_PROGRESS := preload(
 	"res://Resources/DefaultResources/default_run_progress.tres"
 )
-
+# Stores reloadable information on game progress and the player's character
 var run_progress: RunProgress
 
+# run_map moved to run_progress
 # Fletcher - Add data member to hold the game session's map manager.
-var run_map: MapManager
-
-var pending_battle_configuration:BattleSceneConfiguration
-
-const FLOOR_1_ENEMY_POOL = preload("res://Resources/FloorEnemyPools/floor_pool_1.tres")
-const FLOOR_1_SCHEMA = preload("res://Resources/DefaultResources/default_floor_object_schemas.tres")
+# var run_map: MapManager
 
 func initialize_run():
 	var template := DEFAULT_RUN_PROGRESS
@@ -24,20 +25,23 @@ func initialize_run():
 	run_progress.character_data = template.character_data
 	run_progress.character_entity_data = template.character_entity_data
 
-func create_battle_scene_configuration():
-	var enemy_group:EnemyGroup 
-	#objects
-	if run_progress.floor == 1:
-		enemy_group = FLOOR_1_ENEMY_POOL.get_enemy_group(run_progress.floor_progress)
-	# TODO: Add additional if statements for future floors 2, 3, 4
-	
-	var battle_config = BattleSceneConfiguration.new(
-			run_progress.character_entity_data,
-			enemy_group,
-			FLOOR_1_SCHEMA.floor_layout_group.pick_random()
-	)
-	pending_battle_configuration = battle_config
-	return battle_config
+func reset_progress():
+	initialize_run()
+
+func update_character_health(new_value:int):
+	run_progress.character_entity_data.health.value = new_value
+
+func get_character_entity():
+	return run_progress.character_entity_data
+
+func get_floor_progress():
+	return run_progress.floor_progress
+
+func get_current_floor():
+	return run_progress.floor
+
+func add_gold(amount:int):
+	run_progress.gold += amount
 
 func get_character_sprite():
 	return run_progress.character_entity_data.display_texture

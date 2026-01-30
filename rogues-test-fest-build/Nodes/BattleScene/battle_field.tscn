@@ -5,6 +5,7 @@
 
 [node name="BattleField" type="Node2D" unique_id=198434553]
 script = ExtResource("1_4ijax")
+opportunity_chance = 0.5
 
 [node name="BattlePosition" parent="." unique_id=1066525276 instance=ExtResource("2_ikxlt")]
 position = Vector2(-223, 0)
