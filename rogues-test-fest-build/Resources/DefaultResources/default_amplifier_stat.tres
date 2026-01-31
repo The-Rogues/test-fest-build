@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Stat" format=3 uid="uid://d2psuud5mokxb"]
+
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/EntityData/stat.gd" id="1_p08sy"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_p08sy")
+max_value = 2.0
+min_value = 0.25
+value = 1.0
+metadata/_custom_type_script = "uid://bve26sns3h03o"

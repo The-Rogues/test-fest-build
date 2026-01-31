@@ -1,3 +1,9 @@
+# Author: Nathaniel
+# Editor: Fabian
+
+# Will be used to update an options resource which will configure
+# different technical elements of the game
+
 extends Control
 class_name OptionsMenu
 
@@ -12,3 +18,6 @@ func _on_go_back_button_up() -> void:
 	visible = false
 	close.emit()
 	pass # Replace with function body.
+
+# TODO: Connect signals for each settings uption to a function that updates a
+# options resource, which will be used to configure systems

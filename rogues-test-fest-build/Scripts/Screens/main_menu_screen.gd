@@ -1,3 +1,7 @@
+# Author: Nathaniel
+# Edited: Fabian
+
+# Handles screen navigation logic to access different elements of main menu
 extends Node2D
 
 @onready var main_menu: Control = $UILayer/Control/MainMenu

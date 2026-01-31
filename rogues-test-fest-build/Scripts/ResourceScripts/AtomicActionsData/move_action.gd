@@ -13,7 +13,7 @@ func execute(battle_info:BattleActionInfo):
 		pass
 	elif direction == DIRECTION.Random:
 		var rand = randf()
-		print(rand)
+		
 		if rand < 0.5:
 			dir *= -1
 	

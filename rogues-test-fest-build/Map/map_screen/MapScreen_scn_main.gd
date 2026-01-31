@@ -19,7 +19,7 @@ var map_container: PanelContainer # Container that will be used to resize the ma
 # Return: void.
 func _ready() -> void:
 	init_map_screen(
-		GlobalSessionManager.run_map.get_new_map_instance(
+		GlobalSessionManager.run_progress.run_map.get_new_map_instance(
 			Vector2(0.0, 0.0), # Instance size does not matter as the map will be resized to fit its container in the init function.
 			Vector2(32.0, 32.0)
 		)

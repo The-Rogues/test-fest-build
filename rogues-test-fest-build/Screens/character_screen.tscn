@@ -224,7 +224,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 10
 theme_override_fonts/font = ExtResource("4_hodoh")
 theme_override_font_sizes/font_size = 26
-text = "Start Battle"
+text = "Start Run"
 
 [connection signal="button_up" from="Background/MarginContainer/CharacterInfo/Randomize" to="." method="_on_randomize_button_up"]
 [connection signal="button_up" from="StartButtonMargin/StartBattle" to="." method="_on_start_battle_button_up"]

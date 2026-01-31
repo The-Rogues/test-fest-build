@@ -29,7 +29,7 @@ func set_result(won_battle:bool,
 		status_label.text = player_entity.entity_data.name + " Survived!"
 		continue_button.text = "Continue"
 		
-		var gold_amount:int
+		var gold_amount:int = 0
 		for enemy in enemies:
 			if enemy.entity_data is EnemyData:
 				gold_amount += enemy.entity_data.reward_amount
@@ -40,6 +40,8 @@ func set_result(won_battle:bool,
 		player_entity.entity_animator.play("battle_entity/march")
 		display_timer.start()
 		target_scene = "res://Map/map_screen/MapScreen.tscn"
+		GlobalSessionManager.add_gold(gold_amount)
+		GlobalSessionManager.update_character_health(player_entity.entity_data.health.value)
 	else:
 		reward_label.visible = false
 		gold_label.visible = false
@@ -56,7 +58,7 @@ func set_result(won_battle:bool,
 		await particles.finished
 		particles.queue_free()
 		display_timer.start()
-		#GlobalSessionManager.delete_run_data()
+		GlobalSessionManager.reset_progress()
 		target_scene = "res://Screens/main_menu_screen.tscn"
 
 func _on_display_timer_timeout() -> void:

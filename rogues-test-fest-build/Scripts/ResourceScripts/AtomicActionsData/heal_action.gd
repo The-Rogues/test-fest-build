@@ -6,4 +6,5 @@ class_name HealAction
 func execute(battle_info:BattleActionInfo):
 	for target in battle_info.targets:
 		target.heal(heal_amount)
-		await battle_info.animation_bus.play_hit(target)
+		await  target.entity_animator.animation_finished
+		#await battle_info.animation_bus.play_hit(target)

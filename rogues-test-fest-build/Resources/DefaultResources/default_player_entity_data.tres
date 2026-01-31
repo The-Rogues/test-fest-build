@@ -1,29 +1,14 @@
 [gd_resource type="Resource" script_class="BattleEntityData" format=3 uid="uid://delll72pgglwc"]
 
-[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="1_5eqwa"]
-[ext_resource type="Script" uid="uid://p6vjyooq37im" path="res://Scripts/BattleScene/BattleEntityScenes/EntityBehaviours/entity_behaviour.gd" id="2_5umog"]
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/EntityData/stat.gd" id="1_5eqwa"]
+[ext_resource type="Script" uid="uid://c81i6a08v6gb3" path="res://Scripts/BattleScene/EntityBehaviours/entity_behaviour.gd" id="1_5umog"]
 [ext_resource type="Texture2D" uid="uid://bqdsv0ivl8jam" path="res://Graphics/EntitySprites/RogueSprites/rogue_varient_0.tres" id="3_tvpwu"]
-[ext_resource type="Script" uid="uid://c35pmtk5w7lbt" path="res://Scripts/ResourceScripts/BattleEntityData/battle_entity_data.gd" id="4_mp66d"]
-
-[sub_resource type="Resource" id="Resource_5eqwa"]
-script = ExtResource("1_5eqwa")
-max_value = 2.0
-min_value = 0.25
-value = 1.0
-metadata/_custom_type_script = "uid://bve26sns3h03o"
-
-[sub_resource type="Resource" id="Resource_5umog"]
-script = ExtResource("1_5eqwa")
-max_value = 2.0
-min_value = 0.25
-value = 1.0
-metadata/_custom_type_script = "uid://bve26sns3h03o"
+[ext_resource type="Script" uid="uid://c35pmtk5w7lbt" path="res://Scripts/ResourceScripts/EntityData/battle_entity_data.gd" id="4_mp66d"]
 
 [sub_resource type="Resource" id="Resource_avv5r"]
 script = ExtResource("1_5eqwa")
 max_value = 125.0
 value = 125.0
-max_on_start = true
 metadata/_custom_type_script = "uid://bve26sns3h03o"
 
 [resource]
@@ -31,6 +16,5 @@ script = ExtResource("4_mp66d")
 display_texture = ExtResource("3_tvpwu")
 name = "Nameless"
 health = SubResource("Resource_avv5r")
-defense_amplifier = SubResource("Resource_5umog")
-attack_amplifier = SubResource("Resource_5eqwa")
+wait_to_hide_sprite = true
 metadata/_custom_type_script = "uid://c35pmtk5w7lbt"

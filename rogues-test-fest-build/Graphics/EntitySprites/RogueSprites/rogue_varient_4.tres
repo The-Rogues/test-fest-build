@@ -5,4 +5,4 @@ load_path = "res://.godot/imported/rogues.png-b4504f09571f637cd5a57f0337809cb9.c
 
 [resource]
 atlas = SubResource("CompressedTexture2D_8slu3")
-region = Rect2(96, 192, 32, 32)
+region = Rect2(32, 32, 32, 32)

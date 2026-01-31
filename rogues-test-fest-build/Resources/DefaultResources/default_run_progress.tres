@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c6dr42ke5aj7b" path="res://Scripts/ResourceScripts/run_progress.gd" id="2_cmfl0"]
 [ext_resource type="Resource" uid="uid://delll72pgglwc" path="res://Resources/DefaultResources/default_player_entity_data.tres" id="2_gkue0"]
-[ext_resource type="Script" uid="uid://x1bvsmfldegt" path="res://Scripts/ResourceScripts/BattleEntityData/character_data.gd" id="5_wtjr8"]
+[ext_resource type="Script" uid="uid://x1bvsmfldegt" path="res://Scripts/ResourceScripts/EntityData/character_data.gd" id="5_wtjr8"]
 
 [sub_resource type="Resource" id="Resource_0awis"]
 script = ExtResource("5_wtjr8")

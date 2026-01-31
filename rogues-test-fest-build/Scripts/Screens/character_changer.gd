@@ -1,6 +1,9 @@
+# Author: Fabian
+# Editor: Fletcher
+# Used to provide user a preview of the character they will play with
+
 extends Control
 class_name CharacterChanger
-# Used to provide user a preview of the character they will play with
 
 @onready var name_label: Label = $Background/MarginContainer/CharacterInfo/VBox/Hbox/VBox/Name
 @onready var backstory_label: Label = $Background/MarginContainer/CharacterInfo/VBox/Hbox/VBox/Backstory
@@ -17,6 +20,7 @@ class_name CharacterChanger
 
 const TRAIT_PATH = "res://Resources/PersonalityTraits/"
 
+# TODO: Make player_varients an exportable array
 # Character sprite varients
 const player_varients = [
 	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_0.tres"),
@@ -36,6 +40,16 @@ const player_varients = [
 	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_14.tres"),
 	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_15.tres"),
 	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_16.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_17.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_18.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_18.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_19.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_20.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_21.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_22.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_23.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_24.tres"),
+	preload("res://Graphics/EntitySprites/RogueSprites/rogue_varient_25.tres"),
 ]
 
 # Arbitrary varients
@@ -75,7 +89,8 @@ const names = [
 	"Brook",
 	"Bridget",
 ]
-
+# Dictionary that maps character trait to Backstory entry
+# TODO: Have the AI look at all character traits and write its own backstory
 const backstories := {
 	"Brute": "Entered the tower seeking foes worthy of their strength, believing every shattered door and fallen monster proves their dominance.",
 	"Valorous": "Honor bound, entered the tower after hearing that citizens from their village entered despite the warnings.",
@@ -91,6 +106,7 @@ const backstories := {
 func _ready() -> void:
 	_on_randomize_button_up()
 
+# Randomizes character data
 func _on_randomize_button_up() -> void:
 	name_label.text = names.pick_random()
 	
@@ -112,6 +128,7 @@ func _on_randomize_button_up() -> void:
 	
 	var chosen_trait: String = selected_traits.pick_random()
 	var backstory:String = backstories.get(chosen_trait)
+	# Get backstory
 	if backstories != null:
 		backstory_label.text = backstory
 	else:
@@ -120,8 +137,11 @@ func _on_randomize_button_up() -> void:
 	character_sprite.texture = player_varients.pick_random()
 	pass # Replace with function body.
 
-
+# Begins a new run of the game
 func _on_start_battle_button_up() -> void:
+	start_battle.disabled = true
+	
+	# Getting Trait Resources
 	var offensive_trait_name = offensive_option.get_item_text(offensive_option.selected).to_lower()
 	var defensive_trait_name = defensive_option.get_item_text(defensive_option.selected).to_lower()
 	var strategic_trait_name = strategic_option.get_item_text(strategic_option.selected).to_lower()
@@ -133,29 +153,30 @@ func _on_start_battle_button_up() -> void:
 	offensive_trait = offensive_trait.duplicate(true)
 	defensive_trait = defensive_trait.duplicate(true)
 	strategic_trait = strategic_trait.duplicate(true)
-	
+	# Setting Trait weights
 	offensive_trait.weight = offensive_weight.value
 	defensive_trait.weight = defensive_weight.value
 	strategic_trait.weight = strategic_weight.value
 	
+	# Creates new battle entity that will persist through scenes
 	var battle_entity_data:BattleEntityData = load("res://Resources/DefaultResources/default_player_entity_data.tres")
 	battle_entity_data.name = name_label.text
 	battle_entity_data.display_texture = character_sprite.texture
-	
+	# Creates new character data that will persist throgh scenes
 	var character_data = CharacterData.new(
 		backstory_label.text,
 		offensive_trait,
 		defensive_trait,
 		strategic_trait
 	)
-	
+	# Save new character and entity data
+	# TODO: Write a function in session manager so it handles this logic itself
 	GlobalSessionManager.run_progress.character_data = character_data
 	GlobalSessionManager.run_progress.character_entity_data = battle_entity_data
-	start_battle.disabled = true
 	
 	# Fletcher - Make a unique map for the game session. Add callback to load the battle scene when a node is clicked.
-	GlobalSessionManager.run_map = MapManager.new(randi())
-	GlobalSessionManager.run_map.add_callback(
+	GlobalSessionManager.run_progress.run_map = MapManager.new(randi())
+	GlobalSessionManager.run_progress.run_map.add_callback(
 		func(corr_node: RefCounted):
 			if corr_node.node_data:
 				GlobalSceneLoader.load_battle_scene()

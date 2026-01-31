@@ -18,7 +18,8 @@ func _check_action_queue():
 func _execute_queued_action():
 	processing_action = true
 	var queued_action = queue.pop_front()
-	# Waits until function finishes executing
-	await queued_action.execute()
+	if queued_action.action != null:
+		# Waits until function finishes executing
+		await queued_action.execute()
 	processing_action = false
 	_check_action_queue()

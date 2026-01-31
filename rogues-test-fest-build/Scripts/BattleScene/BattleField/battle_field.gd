@@ -35,7 +35,7 @@ func initialize(battle_field_schema:BattleFieldSchema):
 			battle_position.add_child(new_object)
 			new_object.position += battle_object_offset
 			battle_object_positions.append(new_object)
-			new_object.destroyed.connect(_on_object_destroyed)
+			new_object.defeated.connect(_on_object_destroyed)
 		else:
 			battle_object_positions.append(null)
 
@@ -125,14 +125,14 @@ func _on_object_destroyed(object:BattleFieldObject):
 	if obj_index != -1:
 		battle_object_positions[obj_index] = null
 	
-	object.queue_free()
+	#object.queue_free()
 
-func get_player_distance_to_object(object_name:String):
+func get_player_distance_to_object(object_type:BattleObjectData.Type):
 	for i in range(0, battle_object_positions.size()):
 		if !battle_object_positions[i]:
 			continue
-		
-		if battle_object_positions[i].object_data.name == object_name:
+		if battle_object_positions[i].object_data.object_type == object_type:
+			print("found object")
 			return i - current_player_position
 	# ERROR CODE
 	return -9

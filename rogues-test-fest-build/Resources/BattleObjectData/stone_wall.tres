@@ -1,21 +1,30 @@
 [gd_resource type="Resource" script_class="BattleObjectData" format=3 uid="uid://cpid8rkvwcxvt"]
 
+[ext_resource type="Script" uid="uid://c81i6a08v6gb3" path="res://Scripts/BattleScene/EntityBehaviours/entity_behaviour.gd" id="1_0f5cm"]
 [ext_resource type="Texture2D" uid="uid://qxctaf7cvfrl" path="res://Graphics/EntitySprites/BattleFieldObjects/object_varient_3.tres" id="1_t7015"]
-[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/BattleEntityData/stat.gd" id="2_jxmos"]
-[ext_resource type="Script" uid="uid://o5nbdchxwujp" path="res://Scripts/ResourceScripts/BattleEntityData/battle_object_data.gd" id="3_0f5cm"]
+[ext_resource type="Script" uid="uid://c3jljqw3ahnfx" path="res://Scripts/BattleScene/EntityBehaviours/ondeath_pop.gd" id="2_qhpy1"]
+[ext_resource type="Script" uid="uid://bve26sns3h03o" path="res://Scripts/ResourceScripts/EntityData/stat.gd" id="2_t7015"]
+[ext_resource type="Script" uid="uid://o5nbdchxwujp" path="res://Scripts/ResourceScripts/EntityData/battle_object_data.gd" id="3_jxmos"]
+
+[sub_resource type="Resource" id="Resource_c2c2a"]
+script = ExtResource("2_qhpy1")
+metadata/_custom_type_script = "uid://c3jljqw3ahnfx"
 
 [sub_resource type="Resource" id="Resource_qhpy1"]
-script = ExtResource("2_jxmos")
-max_value = 20.0
+script = ExtResource("2_t7015")
+max_value = 60.0
 max_on_start = true
 metadata/_custom_type_script = "uid://bve26sns3h03o"
 
 [resource]
-script = ExtResource("3_0f5cm")
-display_texture = ExtResource("1_t7015")
-name = "Stone Wall"
-health = SubResource("Resource_qhpy1")
+script = ExtResource("3_jxmos")
+object_type = 1
 is_invincible = true
 block_player_attacks = true
 block_enemy_attacks = true
+display_texture = ExtResource("1_t7015")
+name = "Stone Wall"
+health = SubResource("Resource_qhpy1")
+wait_to_hide_sprite = true
+behaviours = Array[ExtResource("1_0f5cm")]([SubResource("Resource_c2c2a")])
 metadata/_custom_type_script = "uid://o5nbdchxwujp"

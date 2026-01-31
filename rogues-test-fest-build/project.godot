@@ -23,6 +23,10 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 GlobalSessionManager="*res://Nodes/Globals/session_manager.tscn"
 GlobalSceneLoader="*res://Nodes/Globals/scene_loader.tscn"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

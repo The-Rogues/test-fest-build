@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_dopfj"]
 script = ExtResource("3_o2n67")
-multiplier = 1
+multiplier = 2
 metadata/_custom_type_script = "uid://l765wa6kln4a"
 
 [sub_resource type="Resource" id="Resource_dyybf"]
@@ -26,7 +26,7 @@ metadata/_custom_type_script = "uid://btp3527x14hav"
 [resource]
 script = ExtResource("5_wytys")
 name = "Overexert"
-description = "Increase attack by 50% but reduce defense by 25%"
-energy_cost = 2
+description = "Increase attack by 25% but reduce defense by 25%"
+energy_cost = 1
 card_actions = Array[ExtResource("1_o2n67")]([SubResource("Resource_tlnm3")])
 metadata/_custom_type_script = "uid://eoxthn8b82t6"

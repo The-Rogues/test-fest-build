@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cjlguvbeycdcb" path="res://Scripts/UI/battle_result_layer.gd" id="1_t3l0d"]
 [ext_resource type="FontFile" uid="uid://dv5gofkx77peh" path="res://Graphics/PlaceholderSource/Dungeon Mode Font/dungeon-mode.ttf" id="2_iy7ov"]
 [ext_resource type="Texture2D" uid="uid://c376h7t33pa0t" path="res://Graphics/PlaceholderSource/Kenny Art/Fantasy UI/Default/Panel/panel-003.png" id="3_nimub"]
+[ext_resource type="AnimationLibrary" uid="uid://dmkql0isinmty" path="res://Resources/Animations/fade_layer.res" id="4_iy7ov"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_njocm"]
 bg_color = Color(0, 0, 0, 1)
@@ -44,43 +45,6 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 modulate_color = Color(0.31907254, 0.33031124, 0.5477941, 1)
-
-[sub_resource type="Animation" id="Animation_y7qw3"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Panel:theme_override_styles/panel:bg_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_d4r28"]
-resource_name = "fade_out"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Panel:theme_override_styles/panel:bg_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.16666667, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_a6l1i"]
-_data = {
-&"RESET": SubResource("Animation_y7qw3"),
-&"fade_out": SubResource("Animation_d4r28")
-}
 
 [node name="BattleResultDisplay" type="CanvasLayer" unique_id=1254281250]
 layer = 8
@@ -222,7 +186,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_vw6we")
 text = "Continue"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1860353629]
-libraries/ = SubResource("AnimationLibrary_a6l1i")
+libraries/fade_layer = ExtResource("4_iy7ov")
 
 [node name="MarchPosition" type="Node2D" parent="." unique_id=1821419925]
 position = Vector2(581, 436)

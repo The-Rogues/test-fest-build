@@ -11,7 +11,6 @@ var player_entity:BattleEntity
 var enemies:Array[BattleEntity]
 var living_enemies:Array[BattleEntity]
 var action_queue:ActionQueue
-var animation_bus:AnimationBus
 var battle_field:BattleField
 
 func initialize(new_player_entity:BattleEntity, 
@@ -25,11 +24,10 @@ func initialize(new_player_entity:BattleEntity,
 	battle_field = new_battle_field
 	
 	action_queue = ActionQueue.new()
-	animation_bus = AnimationBus.new()
+	#animation_bus = AnimationBus.new()
 	
 	for enemy in enemies:
 		var animator = enemy.get_node("EntityAnimator")
-		animation_bus.register(enemy, animator)
 		enemy.defeated.connect(_on_entity_defeated)
 		
 		if enemy.entity_data is EnemyData:
@@ -47,10 +45,16 @@ func end_player_turn() -> void:
 func _run_enemy_turn() -> void:
 	for enemy in enemies:
 		if enemy.entity_data is EnemyData:
-			var target:Array[BattleEntity] = get_action_target(enemy.entity_data.next_action)
+			enemy.hide_icon()
+			var target:Array[BattleEntity] = get_action_target(
+					enemy.entity_data.next_action, enemy)
 			var action_info:BattleActionInfo = create_action_info(enemy, target)
-			for action in enemy.entity_data.next_action.actions:
-				enemy.entity_animator.play("battle_entity/attack")
+			var next_action:EnemyAction = enemy.entity_data.next_action
+			for action in next_action.actions:
+				if next_action.action_type == EnemyAction.Type.ATTACK:
+					enemy.entity_animator.play("battle_entity/attack")
+				elif next_action.action_type == EnemyAction.Type.SUPPORT:
+					enemy.entity_animator.play("battle_entity/heal")
 				await enemy.entity_animator.animation_finished
 				action_queue.enqueue(action, action_info)
 	
@@ -92,9 +96,11 @@ func _on_entity_defeated(battle_entity:BattleEntity):
 		battle_ended.emit(true)
 
 # Resolver for targeting
-func get_action_target(action_group:ActionGroup):
+func get_action_target(action_group:ActionGroup, user:BattleEntity = null):
 	var combat_entities:Array[BattleEntity]
 	match action_group.targeting:
+		TargetingEnum.TARGETING.SELF:
+			combat_entities.append(user)
 		TargetingEnum.TARGETING.PLAYER:
 			combat_entities.append(player_entity)
 		TargetingEnum.TARGETING.ENEMY:
@@ -112,7 +118,7 @@ func create_action_info(user:BattleEntity, target:Array[BattleEntity]):
 		user,
 		target,
 		action_queue,
-		animation_bus,
+		#animation_bus,
 		battle_field
 	)
 	return battle_info
